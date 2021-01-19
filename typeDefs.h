@@ -5,7 +5,7 @@
 typedef void (*voidFunction)();
 
 
-#define DEBUG false;
+#define DEBUG false
 #define PREFIX "movies_"
 #define SUFFIX ".csv"
 #define DIRECTORYPREFIX "eckrothj.movies."

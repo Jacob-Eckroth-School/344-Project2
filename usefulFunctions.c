@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "colors.h"
-
+#include "typeDefs.h"
 
 
 bool checkSuffix(char* suffix, char* stringToCheckAgainst) {
@@ -40,6 +40,13 @@ char* getUserStringInput(char* prompt, int bufSize) {
 	printf("%s",prompt);
 	setCyan();
 	getline(&input, &bufsize, stdin);
+	if(DEBUG){
+		printf("Full Dec of inputted string: ");
+		for(int i = 0; i < strlen(input); i++){
+			printf("%d ",input[i]);
+		}
+		printf("\n");
+	}
 	if (input[strlen(input) - 1] == 10) {
 		input[strlen(input) - 1] = 0; //getting rid of newline character left over from getline
 	}

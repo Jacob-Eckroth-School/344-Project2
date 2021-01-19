@@ -14,6 +14,7 @@
 #include "usefulFunctions.h"
 #include "linkedList.h"
 #include "movie.h"
+
 void processLargestFile() {
 	char* fileName = findLargestFile();
 	if (!fileName) {
@@ -54,6 +55,19 @@ void printProcessingMessage(char* fileName) {
 
 
 void processCustomFile() {
+	char* input = getUserStringInput("Enter the complete file name: ", 80);
+	if (access(input, F_OK) == 0) {
+		printProcessingMessage(input);
+		processFile(input);
+	}
+	else {
+		setRed();
+		fprintf(stderr, "\nThe file %s was not found. Try again\n", input);
+		resetColor();
+	}
+
+
+	free(input);
 
 
 }
@@ -62,6 +76,7 @@ void processCustomFile() {
 
 
 char* findLargestFile() {
+
 	DIR* currDir = opendir(".");
 	struct dirent* aDir;
 	struct stat dirStat;
@@ -126,6 +141,7 @@ char* findSmallestFile() {
 
 
 void processFile(char* fileName) {
+	
 	int randomNumber = rand() % 100000;
 	int numLength = getLengthOfNumber(randomNumber);
 	
@@ -145,28 +161,39 @@ void processFile(char* fileName) {
 	free(numberString);
 
 
-
+	
 	mkdir(directoryName, DIRECTORYPERMISSIONS);
 	
+	printDirectoryInfo(directoryName);
+
 	dealWithFile(fileName, directoryName);
 	
 	free(directoryName);
 }
 
 
+void printDirectoryInfo(char* directoryName) {
+	setGreen();
+	printf("Created directory with name %s\n", directoryName);
+
+	resetColor();
+}
+
 
 void dealWithFile(char* fileName, char* directoryName) {
+
 	struct linkedList* movieList = parseFile(fileName);
+	
 	sortListByYear(movieList);
 
 	struct movie* traveller = movieList->head;
 	int currentYear = traveller->year;
 
-
 	char* filePath = makeFileName(directoryName,currentYear);
 	
 	FILE* currentFile = fopen(filePath, "w");
 	while (traveller) {
+		
 		if (traveller->year != currentYear) {
 			currentYear = traveller->year;
 			free(filePath);
@@ -177,20 +204,23 @@ void dealWithFile(char* fileName, char* directoryName) {
 
 		fprintf(currentFile, "%s\n", traveller->title);
 		traveller = traveller->next;
+		chmod(filePath, FILEPERMISSIONS);
 	}
+
+	fclose(currentFile);
 
 	free(filePath);
 
 	freeList(movieList);
 }
 
+
+
 struct linkedList* parseFile(char* fileName) {
 	FILE* file = fopen(fileName, "r");
 	char* line = NULL;
 	size_t len = 0;
 	ssize_t nread;
-
-	//gets rid of the first line which is pointless.
 	getline(&line, &len, file);
 	struct linkedList* movieList = initializeList();
 	struct movie* moviePointer;
@@ -200,13 +230,14 @@ struct linkedList* parseFile(char* fileName) {
 		listAppend(movieList, moviePointer); //adds the movie struct to the linked list
 
 	}
+
 	free(line);
 	fclose(file);
 	return movieList;
 }
 
 
-char* makeFileName(char* directoryName, int year) {
+char* makeFileName(const char* directoryName, int year) {
 	int numLength = getLengthOfNumber(year);
 	char* fileName = malloc(sizeof(char) * (numLength + strlen(directoryName) + 6)); //plus six  for null terminator, .txt, and /
 
@@ -230,7 +261,7 @@ char* makeFileName(char* directoryName, int year) {
 	
 	fileName[index] = 0;
 
-	printf("%s", fileName);
+
 
 	free(numberString);
 	return fileName;

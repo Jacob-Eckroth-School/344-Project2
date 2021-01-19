@@ -97,7 +97,7 @@ void sortListByYear(struct linkedList* list) {
 
 //taken from CS162 final project. In place merge sort.
 struct movie* merge_sort_ascending(struct movie* head, int length) {
-
+	
 	if (length == 1) {//it's sorted!
 
 		return head;
@@ -123,22 +123,12 @@ struct movie* merge_sort_ascending(struct movie* head, int length) {
 }
 
 struct movie* merge_lists(struct movie* left, struct movie* right) {
-	/*cout<<"\nLeft list:";
-	  Node* left_temp = left;
-	  Node* right_temp = right;
-	  while(left_temp !=NULL){
-	  cout<<left_temp->val<<" ";
-	  left_temp = left_temp->next;
-	  }
-	  cout<<"\nRight list:";
-	  while(right_temp != NULL){
-	  cout<<right_temp->val<<" ";
-	  right_temp = right_temp->next;    			//uncomment for error handling
-	  }*/
+
 
 	struct movie* new_node = NULL;
 	struct movie* temp = NULL;
 	while (left != NULL && right != NULL) {//while we're not at the end of either list.
+
 		if (new_node == NULL) { //if it's the first node in the list we need to change the head.
 			if (left->year < right->year) {
 				new_node = left;

@@ -8,6 +8,7 @@
 */
 void resetColor() {
 	printf("\033[0m");
+	fprintf(stderr, "\033[0m");
 }
 
 
@@ -27,7 +28,7 @@ void printError(char* errorMessage) {
 ** Updated/Returned: None
 */
 void setRed() {
-	printf("\033[0;31m");
+	fprintf(stderr, "\033[0;31m");
 }
 
 /*
@@ -37,6 +38,7 @@ void setRed() {
 */
 void setGreen() {
 	printf("\033[0;32m");
+
 }
 
 /*
@@ -46,4 +48,5 @@ void setGreen() {
 */
 void setCyan() {
 	printf("\033[0;36m");
+
 }

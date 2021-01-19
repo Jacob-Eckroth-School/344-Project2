@@ -3,6 +3,8 @@
 #include <assert.h>
 #include <math.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include "colors.h"
 
 
 
@@ -30,4 +32,19 @@ bool checkSuffix(char* suffix, char* stringToCheckAgainst) {
 
 int getLengthOfNumber(int number) {
 	return (number == 0) ? 1 : floor(log10(abs(number))) + 1;
+}
+
+char* getUserStringInput(char* prompt, int bufSize) {
+	size_t bufsize = bufSize;
+	char* input = (char*)malloc(bufsize * (sizeof(char)));
+	printf("%s",prompt);
+	setCyan();
+	getline(&input, &bufsize, stdin);
+	if (input[strlen(input) - 1] == 10) {
+		input[strlen(input) - 1] = 0; //getting rid of newline character left over from getline
+	}
+
+	resetColor();
+
+	return input;
 }

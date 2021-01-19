@@ -17,6 +17,9 @@ void dealWithFile(char*, char*);
 
 struct linkedList* parseFile(char*);
 
-char* makeFileName(char*, int);
+char* makeFileName(const char*, int);
+
+void printDirectoryInfo(char*);
+
 
 #endif

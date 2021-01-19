@@ -2,7 +2,7 @@
 Name: Jacob Eckroth
 Date: 1/25/2021
 Project Name: Assignment 2: Files & Directories
-Description:
+Description: does cool shit
 */
 
 #include "menus.h"

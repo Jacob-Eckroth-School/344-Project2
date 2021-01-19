@@ -5,9 +5,9 @@
 # http://nuclear.mutantstargoat.com/articles/make/
 
 CC = gcc
-CFLAGS = --std=gnu99
+CFLAGS = --std=gnu99 
 SRCEXT = c
-
+LDFLAGS = -lm
 BINDIR = .
 exe_file = movies_by_year
 

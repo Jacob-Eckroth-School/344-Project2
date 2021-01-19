@@ -10,12 +10,17 @@ Description:
 #include <stdbool.h>
 #include "typeDefs.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 
 void userSelectFile();
 
 
 int main() {
+	time_t t;
+	srand((unsigned) time(&t));
+
 	bool running = true;
 	
 

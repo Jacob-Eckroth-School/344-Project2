@@ -6,7 +6,9 @@
 #include <stdio.h>
 #include "colors.h"
 #include "typeDefs.h"
-
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 bool checkSuffix(char* suffix, char* stringToCheckAgainst) {
 	assert(suffix); 
@@ -57,4 +59,11 @@ char* getUserStringInput(char* prompt, int bufSize) {
 	resetColor();
 
 	return input;
+}
+
+
+int is_regular_file(const char* fileName) {
+	struct stat path_stat;
+	stat(fileName, &path_stat);
+	return S_ISREG(path_stat.st_mode);
 }

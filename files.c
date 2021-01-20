@@ -56,17 +56,23 @@ void printProcessingMessage(char* fileName) {
 
 void processCustomFile() {
 	char* input = getUserStringInput("Enter the complete file name: ", 0);
+	
 	if (access(input, F_OK) == 0) {
-		printProcessingMessage(input);
-		processFile(input);
+		if (is_regular_file(input)) {
+			printProcessingMessage(input);
+			processFile(input);
+		}
+		else {
+			setRed();
+			fprintf(stderr, "\nThe file %s was not found. Try again\n", input);
+			resetColor();
+		}
 	}
 	else {
 		setRed();
 		fprintf(stderr, "\nThe file %s was not found. Try again\n", input);
 		resetColor();
 	}
-
-
 	free(input);
 
 
@@ -88,14 +94,15 @@ char* findLargestFile() {
 		if (strncmp(PREFIX, aDir->d_name, strlen(PREFIX)) == 0) {
 			if (checkSuffix(SUFFIX, aDir->d_name)) {
 				stat(aDir->d_name, &dirStat);
-				if (dirStat.st_size >= largestFileSize) {
-					largestFileSize = dirStat.st_size;
-					if (largestFileTitle) {
-						free(largestFileTitle);
+				if(S_ISREG(dirStat.st_mode)){
+					if (dirStat.st_size >= largestFileSize) {
+						largestFileSize = dirStat.st_size;
+						if (largestFileTitle) {
+							free(largestFileTitle);
+						}
+						largestFileTitle = malloc(sizeof(char) * (strlen(aDir->d_name) + 1));
+						strcpy(largestFileTitle, aDir->d_name);
 					}
-					largestFileTitle = malloc(sizeof(char) * (strlen(aDir->d_name) + 1));
-					strcpy(largestFileTitle, aDir->d_name);
-
 				}
 			}
 
@@ -120,14 +127,15 @@ char* findSmallestFile() {
 		if (strncmp(PREFIX, aDir->d_name, strlen(PREFIX)) == 0) {
 			if (checkSuffix(SUFFIX, aDir->d_name)) {
 				stat(aDir->d_name, &dirStat);
-				if (dirStat.st_size <= smallestFileSize) {
-					smallestFileSize = dirStat.st_size;
-					if (smallestFileTitle) {
-						free(smallestFileTitle);
+				if(S_ISREG(dirStat.st_mode)){
+					if (dirStat.st_size <= smallestFileSize) {
+						smallestFileSize = dirStat.st_size;
+						if (smallestFileTitle) {
+							free(smallestFileTitle);
+						}
+						smallestFileTitle = malloc(sizeof(char) * (strlen(aDir->d_name) + 1));
+						strcpy(smallestFileTitle, aDir->d_name);
 					}
-					smallestFileTitle = malloc(sizeof(char) * (strlen(aDir->d_name) + 1));
-					strcpy(smallestFileTitle, aDir->d_name);
-
 				}
 			}
 

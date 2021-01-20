@@ -9,7 +9,7 @@ int getLengthOfNumber(int);
 
 char* getUserStringInput(char*, int);
 
-
+int is_regular_file(const char*);
 
 
 #endif

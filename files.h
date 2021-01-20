@@ -21,5 +21,5 @@ char* makeFileName(const char*, int);
 
 void printDirectoryInfo(char*);
 
-
+void userSelectFile();
 #endif

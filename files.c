@@ -14,6 +14,7 @@
 #include "usefulFunctions.h"
 #include "linkedList.h"
 #include "movie.h"
+#include "menus.h"
 
 void processLargestFile() {
 	char* fileName = findLargestFile();
@@ -41,7 +42,6 @@ void processSmallestFile() {
 	printProcessingMessage(fileName);
 	processFile(fileName);
 
-
 	free(fileName);
 }
 
@@ -56,25 +56,25 @@ void printProcessingMessage(char* fileName) {
 
 void processCustomFile() {
 	char* input = getUserStringInput("Enter the complete file name: ", 0);
-	
+	bool failed = true;
 	if (access(input, F_OK) == 0) {
 		if (is_regular_file(input)) {
+			failed = false;
 			printProcessingMessage(input);
 			processFile(input);
 		}
-		else {
-			setRed();
-			fprintf(stderr, "\nThe file %s was not found. Try again\n", input);
-			resetColor();
-		}
+
 	}
-	else {
+	
+	if (failed) {
 		setRed();
 		fprintf(stderr, "\nThe file %s was not found. Try again\n", input);
 		resetColor();
 	}
 	free(input);
-
+	if (failed) {
+		userSelectFile();
+	}
 
 }
 
@@ -273,4 +273,28 @@ char* makeFileName(const char* directoryName, int year) {
 
 	free(numberString);
 	return fileName;
+}
+
+
+
+void userSelectFile() {
+	voidFunction fileMenu = &printFileChoices;
+	int choice = getChoiceInput(1, 3, fileMenu);
+	switch (choice) {
+	case 1:
+		processLargestFile();
+
+		break;
+	case 2:
+
+		processSmallestFile();
+		break;
+	case 3:
+
+		processCustomFile();
+		break;
+	default:
+		printf("Error in userSelect switch statement\n");
+		break;
+	}
 }

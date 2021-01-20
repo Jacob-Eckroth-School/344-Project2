@@ -14,7 +14,7 @@ Description: does cool shit
 #include <time.h>
 
 
-void userSelectFile();
+
 
 
 int main() {
@@ -40,26 +40,4 @@ int main() {
 
 	return 0;
 
-}
-
-void userSelectFile() {
-	voidFunction fileMenu = &printFileChoices;
-	int choice = getChoiceInput(1, 3, fileMenu);
-	switch (choice) {
-	case 1:
-		processLargestFile();
-
-		break;
-	case 2:
-
-		processSmallestFile();
-		break;
-	case 3:
-
-		processCustomFile();
-		break;
-	default:
-		printf("Error in userSelect switch statement\n");
-		break;
-	}
 }

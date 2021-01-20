@@ -55,7 +55,7 @@ void printProcessingMessage(char* fileName) {
 
 
 void processCustomFile() {
-	char* input = getUserStringInput("Enter the complete file name: ", 80);
+	char* input = getUserStringInput("Enter the complete file name: ", 0);
 	if (access(input, F_OK) == 0) {
 		printProcessingMessage(input);
 		processFile(input);

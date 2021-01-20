@@ -36,7 +36,10 @@ int getLengthOfNumber(int number) {
 
 char* getUserStringInput(char* prompt, int bufSize) {
 	size_t bufsize = bufSize;
-	char* input = (char*)malloc(bufsize * (sizeof(char)));
+	char* input;
+        if(bufSize!=0){
+		input = (char*)malloc(bufsize * (sizeof(char)));
+	}
 	printf("%s",prompt);
 	setCyan();
 	getline(&input, &bufsize, stdin);

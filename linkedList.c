@@ -6,6 +6,7 @@
 #include <string.h>
 #include <assert.h>
 #include "colors.h"
+#include <assert.h>
 
 /*
 ** Description: Appends a movie pointer to a linked list
@@ -67,8 +68,13 @@ void freeList(struct linkedList* list) {
 }
 
 
-
+/*
+** Description: Prints all the movies in a linked lit
+** Prerequisites: the list is allocated
+** Updated/Returned: memory of linked list is freed
+*/
 void printList(struct linkedList* list){
+	assert(list);
 	struct movie* traveller = list->head;
 	while (traveller) {
 		printf("%s %d %.2f\n", traveller->title, traveller->year, traveller->rating);
@@ -76,8 +82,13 @@ void printList(struct linkedList* list){
 	}
 }
 
-
+/*
+** Description: Updates the tail of a new linked list to be correct
+** Prerequisites: the list is allocated
+** Updated/Returned: Tail of the linked list is pointed to the correct struct.
+*/
 void resetTail(struct linkedList* list) {
+	assert(list);
 	struct movie* traveller = list->head;
 	while (traveller->next != NULL) {
 		traveller = traveller->next;
@@ -86,18 +97,27 @@ void resetTail(struct linkedList* list) {
 }
 
 
+/*
+** Description: Sorts a linked list of movie structs by year using a in place merge sort
+** Prerequisites: the list is allocated
+** Updated/Returned: a linked list that is sorted from lowest to highest by year.
+*/
 void sortListByYear(struct linkedList* list) {
 	assert(list);
 	list->head = merge_sort_ascending(list->head, list->amountOfMovies);
 	resetTail(list);
-
 	
 }
 
 
-//taken from CS162 final project. In place merge sort.
+//taken from my CS162 final project. In place merge sort.
+/*
+** Description: Sorts a linked list of movie structs by year using a in place merge sort
+** Prerequisites: movie is allocated
+** Updated/Returned: a list of movies that is sorted.
+*/
 struct movie* merge_sort_ascending(struct movie* head, int length) {
-	
+	assert(head);
 	if (length == 1) {//it's sorted!
 
 		return head;
@@ -122,6 +142,11 @@ struct movie* merge_sort_ascending(struct movie* head, int length) {
 	return merge_lists(left, right);//returns the two lists combined.
 }
 
+/*
+** Description: Combines 2 sorted linked lists into one
+** Prerequisites: left and right are allocated
+** Updated/Returned: the two combined lists sorted from lowest to highest. 
+*/
 struct movie* merge_lists(struct movie* left, struct movie* right) {
 
 

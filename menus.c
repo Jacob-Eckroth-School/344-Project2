@@ -5,10 +5,20 @@
 #include <string.h>
 #include <stdlib.h>
 
+/*
+** Description: Prints the main menu
+** Prerequisites: None
+** Updated/Returned: None
+*/
 void printMainMenu() {
 	printf("\n1. Select file to process\n2. Exit the program\nEnter a choice 1 or 2:");
 }
 
+/*
+** Description: Prints the file choices
+** Prerequisites: None
+** Updated/Returned: None
+*/
 void printFileChoices() {
 	printf("\nWhich file do you want to process?\nEnter 1 to pick the largest file\nEnter 2 to pick the smallest file\nEnter 3 to specify the name of a file\nEnter a choice from 1 to 3:");
 }
@@ -25,14 +35,15 @@ int getChoiceInput(int lowLimit, int highLimit, voidFunction promptFunction) {
 	size_t bufsize = 2;
 	char* userInput = (char*)malloc(bufsize * (sizeof(char)));
 	while (!valid) {
-		promptFunction();
+
+		promptFunction();		//calls the function passed in by the previous function
 		setCyan();
 		
 		getline(&userInput, &bufsize, stdin);
 		if (userInput[strlen(userInput - 1) == 10]) {
 			userInput[strlen(userInput) - 1] = 0; //getting rid of newline character left over from getline
 		}
-			resetColor();
+		resetColor();
 
 		if (strlen(userInput) != 1) {
 
